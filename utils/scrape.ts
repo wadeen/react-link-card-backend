@@ -6,7 +6,11 @@ export const handleGet = async (url: URL) => {
   if (!targetUrl) {
     return new Response("Missing 'url' query parameter", { status: 400 });
   }
-  const res = await fetch(targetUrl);
+  const res = await fetch(targetUrl, {
+    headers: {
+      "User-Agent": "Twitterbot/1.0",
+    },
+  });
   const body = await res.text();
   const document = new DOMParser().parseFromString(body, "text/html");
   assert(document);
@@ -20,6 +24,7 @@ export const handleGet = async (url: URL) => {
   const ogp = (() => {
     const targetOgp = document?.querySelector('meta[property^="og:image"]')
       ?.getAttribute("content");
+    if (!targetOgp) return;
     if (targetOgp?.startsWith("http")) {
       return targetOgp;
     } else {
@@ -30,6 +35,7 @@ export const handleGet = async (url: URL) => {
   const favicon = (() => {
     const targetFavicon = document?.querySelector('link[rel="icon"]')
       ?.getAttribute("href");
+    if (!targetFavicon) return;
     if (targetFavicon?.startsWith("http")) {
       return targetFavicon;
     } else {
