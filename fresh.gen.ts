@@ -6,11 +6,11 @@ import * as $0 from "./routes/api/metadata.ts";
 import * as $1 from "./routes/index.tsx";
 
 const manifest = {
-  islands: {},
   routes: {
     "./routes/api/metadata.ts": $0,
     "./routes/index.tsx": $1,
   },
+  islands: {},
   baseUrl: import.meta.url,
 };
 
