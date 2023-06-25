@@ -11,6 +11,7 @@ export const handleGet = async (url: URL) => {
       "User-Agent": "Twitterbot/1.0",
     },
   });
+
   const body = await res.text();
   const document = new DOMParser().parseFromString(body, "text/html");
   assert(document);
@@ -43,10 +44,18 @@ export const handleGet = async (url: URL) => {
     }
   })();
 
-  return {
+  // Create the response
+  const responseBody = {
     title,
     description,
     ogp,
     favicon,
   };
+  const responseHeaders = {
+    "Cache-Control": "public, max-age=86400", // Cache for one day
+  };
+
+  return new Response(JSON.stringify(responseBody), {
+    headers: responseHeaders,
+  });
 };
