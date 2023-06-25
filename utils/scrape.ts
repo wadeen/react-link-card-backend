@@ -44,18 +44,10 @@ export const handleGet = async (url: URL) => {
     }
   })();
 
-  // Create the response
-  const responseBody = {
+  return {
     title,
     description,
     ogp,
     favicon,
   };
-  const responseHeaders = {
-    "Cache-Control": "public, max-age=86400", // Cache for one day
-  };
-
-  return new Response(JSON.stringify(responseBody), {
-    headers: responseHeaders,
-  });
 };
