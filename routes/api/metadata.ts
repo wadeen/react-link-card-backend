@@ -1,20 +1,5 @@
-import { handleGet } from "../../utils/scrape.ts";
+import denoOgHandler from "../../utils/denoOgHandler.ts";
 
 export const handler = async (req: Request) => {
-  const url = new URL(req.url);
-  try {
-    const result = await handleGet(url);
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return new Response(`Error scraping url: ${error.message}`, {
-      status: 500,
-    });
-  }
+  return await denoOgHandler(req);
 };
